@@ -1,0 +1,12 @@
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY package.json .
+# npm install will install a set of node_modules in the container
+# no we no need to copy node modules into the container already
+RUN npm install 
+
+COPY . .
+
+CMD ["npm", "run", "start"]
