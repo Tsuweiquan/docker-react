@@ -1,0 +1,15 @@
+language: generic 
+sudo: required # docker require sudo permission
+services:
+  - docker     # tell travis we need a docker container
+
+# any command we can run before we start to deploy our project or do the test
+# in this case, we can build our docker image
+before_install:
+  - docker build . -f Dockerfile.dev -t tsuweiquan/docker-react
+
+# The job to be executed
+# -e is extra
+# CI=true is used to suppress an exorbitant amount of verbose console outputs 
+script:
+  - docker run -e CI=true tsuweiquan/docker-react npm run test -- --coverage
